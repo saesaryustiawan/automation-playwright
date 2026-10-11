@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { users } from '../../data/users';
 import { applicationPaths, invalidLoginScenarios } from '../../data/test-data';
 import { LoginPage } from '../../pages/LoginPage';
+import { ProductsPage } from '../../pages/ProductsPage';
 
 test.describe('Login', { tag: '@regression' }, () => {
   test('allows a standard user to log in', { tag: '@smoke' }, async ({ page }) => {
@@ -11,6 +12,20 @@ test.describe('Login', { tag: '@regression' }, () => {
     await loginPage.login(users.standard.username, users.standard.password);
 
     await expect(page).toHaveURL(applicationPaths.products);
+  });
+
+  test('allows a standard user to log out', { tag: '@smoke' }, async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const productsPage = new ProductsPage(page);
+
+    await loginPage.navigate();
+    await loginPage.login(users.standard.username, users.standard.password);
+    await expect(page).toHaveURL(applicationPaths.products);
+
+    await productsPage.logout();
+
+    await expect(page).toHaveURL('/');
+    await expect(loginPage.loginButton).toBeVisible();
   });
 
   for (const scenario of invalidLoginScenarios) {

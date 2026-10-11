@@ -4,7 +4,7 @@ A learning-focused end-to-end automation project for [Sauce Demo](https://www.sa
 
 ## Current status
 
-The project includes independent login, product, cart, and checkout tests; centralized test data; Page Objects; and a custom authentication fixture. CI runs smoke tests on pull requests and multi-browser regression tests after a push to `main`.
+The project includes independent login, product, cart, and checkout tests; centralized test data; Page Objects; and a custom authentication fixture. It covers valid and invalid login, logout, product browsing, cart additions and removal, and completed checkout. CI runs smoke tests on pull requests and multi-browser regression tests after a push to `main`.
 
 ## Technology stack
 
@@ -31,6 +31,17 @@ The project includes independent login, product, cart, and checkout tests; centr
 Page Objects keep UI selectors and reusable actions in one place. The tests then read like business scenarios and own the assertions, which makes failures easier to understand and UI changes cheaper to update.
 
 The `authenticatedProductsPage` fixture creates a fresh browser page, logs in, and waits for the inventory page before each test that requests it. Fixtures are useful for repeated, reliable setup; they do not share cart state between tests, so test isolation is preserved.
+
+## Automated scenarios
+
+- Log in with the standard user and verify the inventory URL.
+- Log out and verify the login form is available again.
+- Check validation messages for invalid, missing, and locked-out credentials.
+- Add one or more products, verify the cart badge and contents, and remove a product.
+- Enter checkout contact details, review the order, finish checkout, and verify the confirmation.
+- Check product visibility, sorting, and product detail content.
+
+Each test starts with a fresh browser context. Tests that need an authenticated inventory page use the shared fixture; cart state is never shared across tests.
 
 ## Installation
 
@@ -108,11 +119,13 @@ Pass / Fail
 
 ## Test strategy
 
-The suite covers successful and negative authentication, product-list visibility, sorting, product details, cart additions/removal, and checkout completion. Every UI flow receives a fresh page and authentication setup, so no test depends on another test's execution order.
+Every UI flow receives a fresh page and authentication setup, so no test depends on another test's execution order. Asynchronous transitions are handled with Playwright's auto-waiting locator actions and web-first assertions (`toHaveURL`, `toBeVisible`, `toHaveText`, and `toHaveCount`); the suite does not use fixed sleeps.
 
 The locator strategy prioritizes accessible roles and stable Sauce Demo `data-test` attributes. It deliberately avoids XPath, CSS chains based on layout, and fixed delays.
 
-## Future improvements
+## Assumptions
 
-- API and UI-plus-API scenarios where supported
-- Test-plan and automation-strategy documentation
+- The default target is the public Sauce Demo training site. `BASE_URL` can point to a compatible environment.
+- The default account is Sauce Demo's public `standard_user` / `secret_sauce` training account. Set `TEST_USERNAME` and `TEST_PASSWORD` to override it.
+- Checkout address means the site's ZIP/postal code field; Sauce Demo does not request street or city fields.
+- The test suite performs browser UI checks only. It does not create real purchases or depend on external APIs.
