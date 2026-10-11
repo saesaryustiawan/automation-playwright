@@ -2,6 +2,10 @@
 
 A learning-focused end-to-end automation project for [Sauce Demo](https://www.saucedemo.com/). It models a maintainable QA workflow using TypeScript and Playwright Test.
 
+## Screenshot
+
+![Sauce Demo login page](docs/sauce-demo.png)
+
 ## Current status
 
 The project includes independent login, product, cart, and checkout tests; centralized test data; Page Objects; and a custom authentication fixture. It covers valid and invalid login, logout, product browsing, cart additions and removal, and completed checkout. CI runs smoke tests on pull requests and multi-browser regression tests after a push to `main`.
