@@ -11,7 +11,7 @@ export class LoginPage {
     this.usernameInput = page.getByPlaceholder('Username');
     this.passwordInput = page.getByPlaceholder('Password');
     this.loginButton = page.getByRole('button', { name: 'Login' });
-    this.errorMessage = page.getByRole('heading', { name: /Epic sadface:/ });
+    this.errorMessage = page.getByRole('alert');
   }
 
   async navigate(): Promise<void> {

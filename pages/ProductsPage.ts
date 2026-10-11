@@ -11,7 +11,7 @@ export class ProductsPage {
   readonly cartButton: Locator;
   readonly cartBadge: Locator;
   readonly menuButton: Locator;
-  readonly logoutLink: Locator;
+  readonly logoutButton: Locator;
 
   constructor(private readonly page: Page) {
     this.productList = page.locator('.inventory_list');
@@ -19,9 +19,9 @@ export class ProductsPage {
     this.productPrices = page.locator('.inventory_item_price');
     this.sortDropdown = page.getByRole('combobox');
     this.cartButton = page.locator('.shopping_cart_link');
-    this.cartBadge = page.getByTestId('shopping-cart-badge');
+    this.cartBadge = page.locator('.shopping_cart_badge');
     this.menuButton = page.getByRole('button', { name: 'Open Menu' });
-    this.logoutLink = page.getByRole('link', { name: 'Logout' });
+    this.logoutButton = page.getByRole('button', { name: 'Logout' });
   }
 
   async getProductNames(): Promise<string[]> {
@@ -55,6 +55,6 @@ export class ProductsPage {
 
   async logout(): Promise<void> {
     await this.menuButton.click();
-    await this.logoutLink.click();
+    await this.logoutButton.click();
   }
 }
