@@ -1,0 +1,31 @@
+{
+  "name": "automation-exercise-playwright",
+  "version": "1.0.0",
+  "description": "Learning-focused end-to-end test automation for Sauce Demo using Playwright.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "typecheck": "tsc --noEmit",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "test-automation",
+    "qa"
+  ],
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.3.0",
+    "dotenv": "^17.3.1",
+    "typescript": "^7.0.2"
+  }
+}
